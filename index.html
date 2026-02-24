@@ -12,7 +12,7 @@
 
 <style>
 :root {
-  /* Modern Color Palette */
+  /* Modern Color Palette - "Circuit Board Green" */
   --primary: #10b981;       /* Emerald 500 */
   --primary-hover: #059669; /* Emerald 600 */
   --primary-dark: #047857;  /* Emerald 700 */
@@ -38,6 +38,7 @@
   /* Typography */
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   /* Layout & Shadows */
   --radius-sm: 8px;
@@ -70,7 +71,7 @@ body { font-family: var(--font-body); background: var(--bg-main); color: var(--t
 header { background: #ffffff; position: sticky; top: 0; z-index: 300; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .hdr { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; }
-.logo-ico { width: 44px; height: 44px; background: var(--primary-subtle); color: var(--primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid var(--primary-light); }
+.logo-ico { width: 44px; height: 44px; background: var(--primary-subtle); color: var(--primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; border: 1px solid var(--primary-light); font-family: var(--font-mono); font-weight: 800; letter-spacing: -1px; }
 .logo-l1 { font-family: var(--font-heading); color: var(--text-main); font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; }
 .logo-l2 { color: var(--text-muted); font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-top: 2px; }
 .hdr-r { display: flex; align-items: center; gap: 10px; }
@@ -111,7 +112,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 48px 1.5rem 80px; }
 .inp-wrap input { width: 100%; padding: 16px 16px 16px 48px; border: 2px solid var(--border); border-radius: var(--radius-lg); font-size: 1rem; font-family: var(--font-body); font-weight: 500; color: var(--text-main); background: var(--surface); outline: none; transition: all 0.2s; box-shadow: var(--shadow-sm); }
 .inp-wrap input:focus { border-color: var(--primary); box-shadow: var(--shadow-glow); }
 .inp-wrap input::placeholder { color: var(--text-light); font-weight: 400; }
-.inp-ico { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 1.2rem; opacity: 0.7; }
+.inp-ico { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 1rem; opacity: 0.7; font-family: var(--font-mono); font-weight: bold; color: var(--text-muted); }
 .btn-enter { width: 100%; padding: 16px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-lg); font-size: 1rem; font-weight: 700; font-family: var(--font-heading); cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
 .btn-enter:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3); }
 .err-box { background: var(--danger-light); border: 1px solid #fca5a5; color: #b91c1c; border-radius: var(--radius-md); padding: 14px 16px; font-size: 0.85rem; margin-top: 16px; display: none; text-align: left; line-height: 1.5; font-weight: 500; }
@@ -122,7 +123,7 @@ main { max-width: 1000px; margin: 0 auto; padding: 48px 1.5rem 80px; }
 .ballot-hdr::before { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 40%; background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15)); pointer-events: none; }
 .bh-av { width: 56px; height: 56px; border-radius: 50%; background: var(--primary-light); color: var(--primary-dark); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; border: 2px solid var(--primary); font-family: var(--font-heading); font-weight: 700; }
 .bh-name { font-family: var(--font-heading); font-size: 1.3rem; color: #fff; font-weight: 700; margin-bottom: 2px; }
-.bh-meta { font-size: 0.85rem; color: #94a3b8; font-weight: 400; }
+.bh-meta { font-size: 0.85rem; color: #94a3b8; font-weight: 400; font-family: var(--font-mono); }
 .bh-hint { margin-left: auto; font-size: 0.8rem; color: #94a3b8; text-align: right; line-height: 1.5; background: rgba(255,255,255,0.05); padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); }
 .bh-hint b { color: #fff; }
 
@@ -307,7 +308,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 <header>
   <div class="hdr">
     <div class="logo" onclick="showPage('voter')">
-      <div class="logo-ico">🔬</div>
+      <div class="logo-ico">&lt;/&gt;</div>
       <div>
         <div class="logo-l1">ESRC</div>
         <div class="logo-l2">Embedded System Research Center</div>
@@ -316,7 +317,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
     <div class="hdr-r">
       <div class="chip">2026–2027 Elections</div>
       <button class="btn-hdr btn-live" onclick="showPage('live')">📡 Live Results</button>
-      <button class="btn-hdr" onclick="showPage('admin')">⚙ Admin</button>
+      <button class="btn-hdr" onclick="showPage('admin')">🛡️ Admin</button>
     </div>
   </div>
 </header>
@@ -324,12 +325,12 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 <!-- HERO -->
 <div class="hero" id="hero-section">
   <div class="hero-inner">
-    <div class="eyebrow">🗳 Official Voting Portal</div>
+    <div class="eyebrow">⚡ Secure Voting Terminal</div>
     <h1>ESRC Committee <br><em>Elections 2026–2027</em></h1>
     <p>Vote for all positions in a single seamless ballot. Runner-up roles are automatically assigned based on total vote counts.</p>
     <div class="pills">
-      <div class="pill">👥 <b id="total-pill">—</b> Voters</div>
-      <div class="pill">🏅 <b>10</b> Positions</div>
+      <div class="pill">🧑‍💻 <b id="total-pill">—</b> Voters</div>
+      <div class="pill">🎛️ <b>10</b> Positions</div>
       <div class="pill">⚡ <b>8</b> Auto-Roles</div>
     </div>
   </div>
@@ -342,11 +343,11 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 <div id="page-voter" class="page active">
 
   <div class="gate-wrap" id="voter-gate">
-    <div class="gate-icon">🪪</div>
+    <div class="gate-icon">🔌</div>
     <div class="gate-title">Access Your Ballot</div>
     <div class="gate-sub">Enter your Student ID exactly as registered. You will vote for <strong>all positions</strong> in one single session.</div>
     <div class="inp-wrap">
-      <span class="inp-ico">🆔</span>
+      <span class="inp-ico">&gt;_</span>
       <input type="text" id="voter-id-input" placeholder="e.g. 241-15-519" onkeydown="if(event.key==='Enter')verifyVoter()"/>
     </div>
     <button class="btn-enter" onclick="verifyVoter()">Verify &amp; Open Ballot →</button>
@@ -355,7 +356,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 
   <div id="ballot-section" style="display:none">
     <div class="ballot-hdr">
-      <div class="bh-av">👤</div>
+      <div class="bh-av">🧑‍💻</div>
       <div style="flex:1">
         <div class="bh-name" id="bh-name"></div>
         <div class="bh-meta" id="bh-meta"></div>
@@ -384,7 +385,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 
   <div class="card" id="success-section" style="display:none">
     <div class="success-wrap">
-      <div class="s-icon">🎉</div>
+      <div class="s-icon">🚀</div>
       <div class="s-title">Vote Submitted!</div>
       <p class="s-sub">Thank you, <strong id="success-name"></strong>. Your ballot for the ESRC Committee Elections has been securely recorded.</p>
       <div class="s-box">
@@ -435,7 +436,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 
   <div id="admin-gate" class="gate-wrap" style="padding-top: 40px;">
     <div class="card">
-      <div class="card-title" style="margin-bottom: 24px; font-size: 1.5rem;">🔐 Admin Authentication</div>
+      <div class="card-title" style="margin-bottom: 24px; font-size: 1.5rem;">🛡️ Admin Authentication</div>
       <div class="fg" style="margin-bottom:24px">
         <label>Master Password</label>
         <input type="password" id="admin-pass" placeholder="Enter password..." onkeydown="if(event.key==='Enter')adminLogin()"/>
@@ -456,14 +457,18 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
           <span id="elec-lbl">Accepting Votes</span>
           <label class="toggle"><input type="checkbox" id="elec-toggle" checked onchange="toggleElection()"/><span class="slider"></span></label>
         </div>
+        <div class="toggle-wrap">
+          <span id="live-lbl">Public Live Results</span>
+          <label class="toggle"><input type="checkbox" id="live-toggle" checked onchange="toggleLive()"/><span class="slider"></span></label>
+        </div>
         <button class="btn-logout" onclick="adminLogout()">Sign Out</button>
       </div>
     </div>
 
     <div class="atabs">
-      <button class="atab active" onclick="switchATab('voters',this)">👥 Voters (<span id="atab-vc">0</span>)</button>
-      <button class="atab" onclick="switchATab('candidates',this)">🏅 Candidates</button>
-      <button class="atab" onclick="switchATab('results',this)">📊 Reports</button>
+      <button class="atab active" onclick="switchATab('voters',this)">🧑‍💻 Voters (<span id="atab-vc">0</span>)</button>
+      <button class="atab" onclick="switchATab('candidates',this)">🎛️ Candidates</button>
+      <button class="atab" onclick="switchATab('results',this)">📈 Reports</button>
     </div>
 
     <!-- VOTERS -->
@@ -553,7 +558,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
       <div class="card">
         <div class="card-title">Final Assignment Report</div>
         <div class="card-sub">Detailed breakdown of winners and automatically assigned runner-ups.</div>
-        <div id="results-body"><div class="empty"><div class="ei">📊</div><p>Awaiting votes...</p></div></div>
+        <div id="results-body"><div class="empty"><div class="ei">📭</div><p>Awaiting votes...</p></div></div>
       </div>
     </div>
 
@@ -605,13 +610,14 @@ let candidates = [
   {id:6,  name:"Sharmin Akter",    sid:"231-15-509", position:"General Secretary",                dept:"CSE", batch:"Batch 64", bio:"Experienced in club management and administrative tasks."},
 ];
 
-let votes        = {}; 
-let selections   = {}; 
-let electionOpen = true;
-let currentVoter = null;
-let nextVid      = 300;
-let nextCid      = 300;
-const ADMIN_PASS = 'admin123'; // Simplified for preview
+let votes           = {}; 
+let selections      = {}; 
+let electionOpen    = true;
+let liveResultsOpen = true; 
+let currentVoter    = null;
+let nextVid         = 300;
+let nextCid         = 300;
+const ADMIN_PASS    = 'admin123'; // Simplified for preview
 
 // ── INIT ─────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
@@ -701,7 +707,7 @@ function buildBallot() {
   });
 
   if(!body.children.length) {
-    body.innerHTML = '<div class="card"><div class="empty"><div class="ei">🏅</div><p>No candidates available yet.</p></div></div>';
+    body.innerHTML = '<div class="card"><div class="empty"><div class="ei">🪫</div><p>No candidates available yet.</p></div></div>';
   }
 }
 
@@ -781,6 +787,18 @@ function toggleElection() {
   toast(electionOpen ? 'System is accepting votes.' : 'System is locked.');
 }
 
+function toggleLive() {
+  liveResultsOpen = document.getElementById('live-toggle').checked;
+  const lbl = document.getElementById('live-lbl');
+  lbl.textContent = liveResultsOpen ? 'Public Live Results' : 'Results Hidden';
+  toast(liveResultsOpen ? 'Live results are now visible to the public.' : 'Live results are securely hidden.');
+  
+  // Refresh if currently on live page
+  if (document.getElementById('page-live').classList.contains('active')) {
+    renderLive();
+  }
+}
+
 function adminLogin() {
   if(document.getElementById('admin-pass').value === ADMIN_PASS) {
     hide('admin-gate'); show('admin-panel');
@@ -845,7 +863,7 @@ function renderVoterTable() {
   document.getElementById('voter-count-lbl').textContent = `${voters.length} registered • ${voted} voted • ${voters.length - voted} pending`;
 
   const tb = document.getElementById('voter-tbody');
-  if(!list.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty">No matching records.</div></td></tr>`; return; }
+  if(!list.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty">📭 No matching records.</div></td></tr>`; return; }
   
   tb.innerHTML = list.map((v,i) => `
     <tr>
@@ -885,7 +903,7 @@ function removeCandidate(id) {
 
 function renderCandTable() {
   const tb = document.getElementById('cand-tbody');
-  if(!candidates.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty">No candidates found.</div></td></tr>`; return; }
+  if(!candidates.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty">🪫 No candidates found.</div></td></tr>`; return; }
   
   tb.innerHTML = candidates.map((c,i) => `
     <tr>
@@ -931,7 +949,7 @@ function renderResults() {
   const body = document.getElementById('results-body');
   
   if(!activePositions.length) {
-    body.innerHTML = '<div class="empty">No active candidates.</div>';
+    body.innerHTML = '<div class="empty"><div class="ei">📭</div><p>Awaiting votes...</p></div>';
     return;
   }
 
@@ -987,6 +1005,23 @@ function stopLiveRefresh() { if(liveTimer) clearInterval(liveTimer); }
 
 function renderLive() {
   liveCountdown = 10;
+  
+  if (!liveResultsOpen) {
+    document.getElementById('lv-voted').textContent = '-';
+    document.getElementById('lv-pct').textContent = 'Hidden by Administrator';
+    document.getElementById('lv-lastupdate').textContent = 'Last sync: ' + new Date().toLocaleTimeString();
+    document.getElementById('lv-overall').innerHTML = '';
+    document.getElementById('lv-body').innerHTML = `
+      <div class="card">
+        <div class="empty">
+          <div class="ei">🛡️</div>
+          <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:var(--text-main); margin-bottom:8px;">Live Results Hidden</h3>
+          <p>The administrator has temporarily hidden the live public telecast.</p>
+        </div>
+      </div>`;
+    return;
+  }
+
   const totalVoters = voters.length;
   const totalVoted  = voters.filter(v => v.voted || votes[v.id]).length;
   
@@ -1067,4 +1102,4 @@ function toast(msg, err=false) {
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
 </body>
-</html>`
+</html>
