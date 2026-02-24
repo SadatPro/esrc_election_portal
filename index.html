@@ -60,6 +60,18 @@ body { font-family: var(--font-body); background: var(--bg-main); color: var(--t
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── LOADING OVERLAY ── */
+#loading-overlay {
+  position: fixed; inset: 0; background: var(--bg-main); z-index: 9999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.4s ease;
+}
+.spinner {
+  width: 48px; height: 48px; border: 4px solid var(--border); border-top-color: var(--primary);
+  border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
+}
 
 /* ── STATUS BAR ── */
 #status-bar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 1rem; font-size: 0.8rem; font-weight: 600; font-family: var(--font-heading); color: #fff; background: var(--primary-dark); transition: background 0.3s; z-index: 400; position: relative; }
@@ -295,13 +307,22 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
   .live-cand-row > div:last-child { text-align: left; width: 100%; display: flex; justify-content: space-between; align-items: center; }
 }
 </style>
+
+<!-- Add Supabase JS Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+<!-- INITIAL LOADING OVERLAY -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <div style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-main); font-weight: 700;">Connecting to Secure Server...</div>
+</div>
 
 <!-- STATUS BAR -->
 <div id="status-bar">
   <span class="sdot"></span>
-  <span id="status-text">Election is OPEN — All registered members may now cast their ballot</span>
+  <span id="status-text">Connecting...</span>
 </div>
 
 <!-- HEADER -->
@@ -329,7 +350,7 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
     <h1>ESRC Committee <br><em>Elections 2026–2027</em></h1>
     <p>Vote for all positions in a single seamless ballot. Runner-up roles are automatically assigned based on total vote counts.</p>
     <div class="pills">
-      <div class="pill">🧑‍💻 <b id="total-pill">—</b> Voters</div>
+      <div class="pill">🧑‍💻 <b id="total-pill">0</b> Voters</div>
       <div class="pill">🎛️ <b>10</b> Positions</div>
       <div class="pill">⚡ <b>8</b> Auto-Roles</div>
     </div>
@@ -455,11 +476,11 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
       <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
         <div class="toggle-wrap">
           <span id="elec-lbl">Accepting Votes</span>
-          <label class="toggle"><input type="checkbox" id="elec-toggle" checked onchange="toggleElection()"/><span class="slider"></span></label>
+          <label class="toggle"><input type="checkbox" id="elec-toggle" onchange="toggleElection()"/><span class="slider"></span></label>
         </div>
         <div class="toggle-wrap">
           <span id="live-lbl">Public Live Results</span>
-          <label class="toggle"><input type="checkbox" id="live-toggle" checked onchange="toggleLive()"/><span class="slider"></span></label>
+          <label class="toggle"><input type="checkbox" id="live-toggle" onchange="toggleLive()"/><span class="slider"></span></label>
         </div>
         <button class="btn-logout" onclick="adminLogout()">Sign Out</button>
       </div>
@@ -575,6 +596,13 @@ footer strong { color: var(--text-main); font-family: var(--font-heading); font-
 
 <script>
 // ═══════════════════════════════════════════════════════════════
+//  SUPABASE INITIALIZATION (Fixed Variable Shadowing)
+// ═══════════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://pxqruwscthmedqmnaruz.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_58wOpVLaXUajnX0fUdtWPQ_ByhqfzXd';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ═══════════════════════════════════════════════════════════════
 //  DATA & STATE
 // ═══════════════════════════════════════════════════════════════
 const POSITIONS = [
@@ -590,39 +618,107 @@ const POSITIONS = [
   { id:'press', name:'Press Secretary', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Press Secretary' },
 ];
 
-let voters = [
-  {id:1,  name:"Wasifa Zaman",       sid:"241-15-519", email:"wasifa@diu.edu.bd",    dept:"CSE", batch:"Batch 66", voted:false},
-  {id:2,  name:"Rafiqul Islam",      sid:"221-15-201", email:"rafiq@diu.edu.bd",     dept:"CSE", batch:"Batch 63", voted:false},
-  {id:3,  name:"Nusrat Jahan",       sid:"231-15-330", email:"nusrat@diu.edu.bd",    dept:"CSE", batch:"Batch 64", voted:false},
-  {id:4,  name:"Tanvir Ahmed",       sid:"241-15-487", email:"tanvir@diu.edu.bd",    dept:"EEE", batch:"Batch 66", voted:false},
-  {id:5,  name:"Sadia Afrin",        sid:"231-15-118", email:"sadia@diu.edu.bd",     dept:"CSE", batch:"Batch 64", voted:false},
-  {id:6,  name:"Mahmudul Hasan",     sid:"221-25-045", email:"mahmudul@diu.edu.bd",  dept:"EEE", batch:"Batch 63", voted:false},
-  {id:7,  name:"Fatema Khatun",      sid:"241-15-602", email:"fatema@diu.edu.bd",    dept:"CSE", batch:"Batch 66", voted:false},
-  {id:8,  name:"Sabbir Hossain",     sid:"231-15-077", email:"sabbir@diu.edu.bd",    dept:"CSE", batch:"Batch 65", voted:false},
-];
-
-let candidates = [
-  {id:1,  name:"Mahmudul Hasan",   sid:"221-25-045", position:"President",                        dept:"EEE", batch:"Batch 63", bio:"Passionate leader with embedded systems research experience."},
-  {id:2,  name:"Arif Hossain",     sid:"231-15-213", position:"President",                        dept:"CSE", batch:"Batch 65", bio:"Committed to growing ESRC's research output and team culture."},
-  {id:3,  name:"Sabbir Hossain",   sid:"231-15-077", position:"Vice President - 2",               dept:"CSE", batch:"Batch 65", bio:"Strong communicator, ready to support club operations."},
-  {id:4,  name:"Mithila Akter",    sid:"231-25-290", position:"Vice President - 2",               dept:"EEE", batch:"Batch 64", bio:"Experienced in coordination and member engagement."},
-  {id:5,  name:"Nusrat Jahan",     sid:"231-15-330", position:"General Secretary",                dept:"CSE", batch:"Batch 64", bio:"Organized and detail-focused, loves planning and documentation."},
-  {id:6,  name:"Sharmin Akter",    sid:"231-15-509", position:"General Secretary",                dept:"CSE", batch:"Batch 64", bio:"Experienced in club management and administrative tasks."},
-];
-
+// Replaced dummy data with empty arrays that fetch from database
+let voters          = [];
+let candidates      = [];
 let votes           = {}; 
 let selections      = {}; 
+
 let electionOpen    = true;
 let liveResultsOpen = true; 
 let currentVoter    = null;
-let nextVid         = 300;
-let nextCid         = 300;
-const ADMIN_PASS    = 'admin123'; // Simplified for preview
 
-// ── INIT ─────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('total-pill').textContent = voters.length;
+const ADMIN_PASS    = 'admin123';
+
+// ── INITIAL DATA FETCH ────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  await fetchData();
+  
+  // Hide loading screen
+  const loader = document.getElementById('loading-overlay');
+  loader.style.opacity = '0';
+  setTimeout(() => loader.style.display = 'none', 400);
 });
+
+async function fetchData() {
+  try {
+    // 1. Fetch Settings
+    const { data: settings } = await supabaseClient.from('election_settings').select('*').single();
+    if(settings) {
+      electionOpen = settings.is_open;
+      liveResultsOpen = settings.live_results_public;
+      updateStatusUI();
+    }
+
+    // 2. Fetch Voters
+    const { data: vData } = await supabaseClient.from('voters').select('*');
+    if(vData) {
+      voters = vData.map(v => ({
+        id: v.id, name: v.full_name, sid: v.student_id, 
+        email: v.email, dept: v.department, batch: v.batch, voted: v.has_voted
+      }));
+    }
+
+    // 3. Fetch Candidates
+    const { data: cData } = await supabaseClient.from('candidates').select('*');
+    if(cData) {
+      candidates = cData.map(c => ({
+        id: c.id, name: c.full_name, sid: c.student_id, 
+        position: c.target_position, dept: c.department, batch: c.batch, bio: c.bio
+      }));
+    }
+
+    // 4. Fetch Votes
+    const { data: vtData } = await supabaseClient.from('votes').select('*');
+    votes = {};
+    if(vtData) {
+      vtData.forEach(v => {
+        if(!votes[v.voter_id]) votes[v.voter_id] = {};
+        votes[v.voter_id][v.target_position] = v.candidate_id;
+      });
+    }
+
+    // Trigger UI updates
+    document.getElementById('total-pill').textContent = voters.length;
+    
+    if(document.getElementById('page-admin').classList.contains('active')) {
+      renderVoterTable(); 
+      renderCandTable();
+      if(document.getElementById('atab-results').style.display !== 'none') renderResults();
+    }
+    
+    if(document.getElementById('page-live').classList.contains('active')) {
+      renderLive();
+    }
+
+  } catch (err) {
+    console.error("Fetch Error:", err);
+  }
+}
+
+function updateStatusUI() {
+  const bar = document.getElementById('status-bar');
+  const txt = document.getElementById('status-text');
+  const elecLbl = document.getElementById('elec-lbl');
+  const elecToggle = document.getElementById('elec-toggle');
+  const liveLbl = document.getElementById('live-lbl');
+  const liveToggle = document.getElementById('live-toggle');
+
+  if(elecToggle) elecToggle.checked = electionOpen;
+  if(liveToggle) liveToggle.checked = liveResultsOpen;
+
+  if(electionOpen) {
+    bar.className = '';
+    txt.textContent = 'Election is OPEN — All registered members may now cast their ballot';
+    if(elecLbl) elecLbl.textContent = 'Accepting Votes';
+  } else {
+    bar.className = 'closed';
+    txt.textContent = 'Election is CLOSED — Voting has ended.';
+    if(elecLbl) elecLbl.textContent = 'Election Closed';
+  }
+  
+  if(liveLbl) liveLbl.textContent = liveResultsOpen ? 'Public Live Results' : 'Results Hidden';
+}
 
 // ── PAGE NAVIGATION ──────────────────────────────────
 function showPage(p) {
@@ -630,7 +726,11 @@ function showPage(p) {
   document.getElementById('page-' + p).classList.add('active');
   document.getElementById('hero-section').style.display = (p === 'voter') ? '' : 'none';
   if(p === 'voter') resetGate();
-  if(p === 'live') startLiveRefresh(); else stopLiveRefresh();
+  if(p === 'live') {
+    startLiveRefresh();
+  } else {
+    stopLiveRefresh();
+  }
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -646,6 +746,7 @@ function verifyVoter() {
   if(!electionOpen) { showErr('gate-err', 'The election is currently closed.'); return; }
   const sid = document.getElementById('voter-id-input').value.trim();
   if(!sid) { showErr('gate-err', 'Please enter your Student ID.'); return; }
+  
   const v = voters.find(x => x.sid === sid);
   if(!v) { showErr('gate-err', 'ID not found. Please verify your student ID.'); return; }
   if(v.voted || votes[v.id]) { showErr('gate-err', 'You have already voted. Only one submission is allowed.'); return; }
@@ -713,7 +814,7 @@ function buildBallot() {
 
 function pick(el) {
   const posId   = el.dataset.posid;
-  const cid     = parseInt(el.dataset.cid);
+  const cid     = el.dataset.cid; // UUID strings instead of ints
   const pos     = POSITIONS.find(p => p.id === posId);
   const posName = pos ? pos.name : posId;
   
@@ -752,7 +853,7 @@ function updateSummary() {
   document.getElementById('sel-summary').innerHTML = lines || '<em>No selections made.</em>';
 }
 
-function submitVote() {
+async function submitVote() {
   const sel = selections[currentVoter.id] || {};
   const activePosCount = POSITIONS.filter(p => candidates.some(c => c.position === p.name)).length;
   
@@ -762,41 +863,54 @@ function submitVote() {
   }
   if(!confirm('Submit ballot? Your choices cannot be changed later.')) return;
   
-  votes[currentVoter.id] = sel;
-  currentVoter.voted = true;
-  hide('ballot-section');
-  show('success-section');
-  document.getElementById('success-name').textContent = currentVoter.name;
+  // Format for Supabase Insertion
+  const votesToInsert = Object.keys(sel).map(posName => ({
+    voter_id: currentVoter.id,
+    candidate_id: sel[posName],
+    target_position: posName
+  }));
+
+  // Show loading during submission
+  const oldText = document.querySelector('.btn-sub').textContent;
+  document.querySelector('.btn-sub').textContent = 'Submitting...';
+  
+  try {
+    const { error: voteErr } = await supabaseClient.from('votes').insert(votesToInsert);
+    if (voteErr) { throw voteErr; }
+
+    const { error: uErr } = await supabaseClient.from('voters').update({ has_voted: true }).eq('id', currentVoter.id);
+    if (uErr) { throw uErr; }
+
+    // Success State
+    votes[currentVoter.id] = sel;
+    currentVoter.voted = true;
+    hide('ballot-section');
+    show('success-section');
+    document.getElementById('success-name').textContent = currentVoter.name;
+    
+    // Refresh Global Sync
+    await fetchData();
+
+  } catch(err) {
+    toast('Error submitting vote: ' + err.message, true);
+    document.querySelector('.btn-sub').textContent = oldText;
+  }
 }
 
 // ── ADMIN CONTROLS ───────────────────────────────────
-function toggleElection() {
+async function toggleElection() {
   electionOpen = document.getElementById('elec-toggle').checked;
-  const bar = document.getElementById('status-bar');
-  const txt = document.getElementById('status-text');
-  const lbl = document.getElementById('elec-lbl');
-  if(electionOpen) {
-    bar.className = '';
-    txt.textContent = 'Election is OPEN — All registered members may now cast their ballot';
-    lbl.textContent = 'Accepting Votes';
-  } else {
-    bar.className = 'closed';
-    txt.textContent = 'Election is CLOSED — Voting has ended.';
-    lbl.textContent = 'Election Closed';
-  }
+  await supabaseClient.from('election_settings').update({is_open: electionOpen}).eq('id', 1);
+  updateStatusUI();
   toast(electionOpen ? 'System is accepting votes.' : 'System is locked.');
 }
 
-function toggleLive() {
+async function toggleLive() {
   liveResultsOpen = document.getElementById('live-toggle').checked;
-  const lbl = document.getElementById('live-lbl');
-  lbl.textContent = liveResultsOpen ? 'Public Live Results' : 'Results Hidden';
-  toast(liveResultsOpen ? 'Live results are now visible to the public.' : 'Live results are securely hidden.');
-  
-  // Refresh if currently on live page
-  if (document.getElementById('page-live').classList.contains('active')) {
-    renderLive();
-  }
+  await supabaseClient.from('election_settings').update({live_results_public: liveResultsOpen}).eq('id', 1);
+  updateStatusUI();
+  toast(liveResultsOpen ? 'Live results are now visible.' : 'Live results are hidden.');
+  if (document.getElementById('page-live').classList.contains('active')) renderLive();
 }
 
 function adminLogin() {
@@ -825,7 +939,7 @@ function switchATab(name, btn) {
 let vFilter = '';
 function filterVoters(q) { vFilter = q.toLowerCase(); renderVoterTable(); }
 
-function addVoter() {
+async function addVoter() {
   const name  = document.getElementById('nv-name').value.trim();
   const sid   = document.getElementById('nv-sid').value.trim();
   const email = document.getElementById('nv-email').value.trim();
@@ -835,19 +949,26 @@ function addVoter() {
   if(!name || !sid) { toast('Name and Student ID required.', true); return; }
   if(voters.find(v => v.sid === sid)) { toast('ID already registered.', true); return; }
   
-  voters.push({id:nextVid++, name, sid, email, dept, batch, voted:false});
+  const { error } = await supabaseClient.from('voters').insert([{
+    full_name: name, student_id: sid, email: email, department: dept, batch: batch
+  }]);
+
+  if(error) {
+    toast(error.message, true);
+    return;
+  }
+
   ['nv-name','nv-sid','nv-email','nv-dept','nv-batch'].forEach(f => document.getElementById(f).value = '');
-  renderVoterTable();
-  document.getElementById('total-pill').textContent = voters.length;
+  await fetchData();
   toast('Voter registered.');
 }
 
-function removeVoter(id) {
+async function removeVoter(id) {
   if(!confirm('Permanently remove this voter?')) return;
-  voters = voters.filter(v => v.id !== id);
-  delete votes[id];
-  renderVoterTable();
-  document.getElementById('total-pill').textContent = voters.length;
+  const { error } = await supabaseClient.from('voters').delete().eq('id', id);
+  if(error) { toast(error.message, true); return; }
+  await fetchData();
+  toast('Voter removed');
 }
 
 function renderVoterTable() {
@@ -873,12 +994,12 @@ function renderVoterTable() {
       <td>${esc(v.dept||'—')}</td>
       <td>${esc(v.batch||'—')}</td>
       <td><span class="badge ${(v.voted||votes[v.id]) ? 'bg' : 'bo'}">${(v.voted||votes[v.id]) ? 'Voted' : 'Pending'}</span></td>
-      <td><button class="btn-d" onclick="removeVoter(${v.id})">Del</button></td>
+      <td><button class="btn-d" onclick="removeVoter('${v.id}')">Del</button></td>
     </tr>`).join('');
 }
 
 // ── ADMIN: CANDIDATES ────────────────────────────────
-function addCandidate() {
+async function addCandidate() {
   const name  = document.getElementById('nc-name').value.trim();
   const sid   = document.getElementById('nc-sid').value.trim();
   const pos   = document.getElementById('nc-pos').value;
@@ -888,17 +1009,25 @@ function addCandidate() {
   
   if(!name || !pos) { toast('Name and Position are required.', true); return; }
   
-  candidates.push({id:nextCid++, name, sid, position:pos, dept, batch, bio});
+  const { error } = await supabaseClient.from('candidates').insert([{
+    full_name: name, student_id: sid, target_position: pos, department: dept, batch: batch, bio: bio
+  }]);
+
+  if(error) { toast(error.message, true); return; }
+
   ['nc-name','nc-sid','nc-dept','nc-batch','nc-bio'].forEach(f => document.getElementById(f).value = '');
   document.getElementById('nc-pos').value = '';
-  renderCandTable();
+  
+  await fetchData();
   toast('Candidate registered.');
 }
 
-function removeCandidate(id) {
+async function removeCandidate(id) {
   if(!confirm('Remove this candidate?')) return;
-  candidates = candidates.filter(c => c.id !== id);
-  renderCandTable();
+  const { error } = await supabaseClient.from('candidates').delete().eq('id', id);
+  if(error) { toast(error.message, true); return; }
+  await fetchData();
+  toast('Candidate removed.');
 }
 
 function renderCandTable() {
@@ -913,7 +1042,7 @@ function renderCandTable() {
       <td><span class="badge bg">${esc(c.position)}</span></td>
       <td>${esc(c.dept||'—')}</td>
       <td>${esc(c.batch||'—')}</td>
-      <td><button class="btn-d" onclick="removeCandidate(${c.id})">Del</button></td>
+      <td><button class="btn-d" onclick="removeCandidate('${c.id}')">Del</button></td>
     </tr>`).join('');
 }
 
@@ -989,15 +1118,19 @@ function renderResults() {
 let liveTimer = null;
 let liveCountdown = 10;
 
-function startLiveRefresh() {
+async function startLiveRefresh() {
   stopLiveRefresh();
-  renderLive();
+  await renderLive();
   liveCountdown = 10;
-  liveTimer = setInterval(() => {
+  liveTimer = setInterval(async () => {
     liveCountdown--;
     const el = document.getElementById('lv-countdown');
     if(el) el.textContent = liveCountdown;
-    if(liveCountdown <= 0) { renderLive(); liveCountdown = 10; }
+    if(liveCountdown <= 0) { 
+      await fetchData(); // Pull fresh db data
+      renderLive(); 
+      liveCountdown = 10; 
+    }
   }, 1000);
 }
 
