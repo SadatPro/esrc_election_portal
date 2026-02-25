@@ -150,6 +150,21 @@ input[type=text], input[type=email], input[type=password], select, textarea {
 input:focus, select:focus, textarea:focus { border: 2px solid var(--md-primary); padding: 13px 15px; outline: none; }
 input::placeholder, textarea::placeholder { color: var(--md-outline); }
 
+/* Terms & Conditions Box */
+.terms-box {
+  background: var(--md-surface-variant);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  color: var(--md-on-surface-variant);
+  line-height: 1.6;
+  margin-top: var(--space-sm);
+}
+.terms-box ul { padding-left: 20px; margin-top: 8px; margin-bottom: 8px;}
+
 /* ── BUTTONS ── */
 .btn { padding: 12px 24px; border-radius: var(--radius-pill); border: none; cursor: pointer; font-size: 0.95rem; font-weight: 600; font-family: var(--font-body); transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
 .btn-p { background: var(--md-primary); color: var(--md-on-primary); box-shadow: var(--elevation-1); }
@@ -514,7 +529,7 @@ footer strong { color: var(--md-on-surface); font-family: var(--font-heading); f
 
 <!-- ══ PUBLIC REGISTRATION PAGE ══ -->
 <div id="page-register" class="page">
-  <div class="card gate-wrap" style="max-width: 600px;">
+  <div class="card gate-wrap" style="max-width: 600px;" id="reg-wrapper">
     <div class="gate-icon">📝</div>
     <div class="gate-title">Open Registration</div>
     <div class="gate-sub">Register yourself as a voter or apply as a candidate. All submissions require admin approval before becoming active.</div>
@@ -567,6 +582,34 @@ footer strong { color: var(--md-on-surface); font-family: var(--font-heading); f
         <div class="fg"><label>Image URL (Optional)</label><input type="text" id="pub-nc-image" placeholder="https://example.com/image.jpg"/></div>
         <div class="fg"><label>Payment No. (bKash/Nagad) *</label><input type="text" id="pub-nc-pay" placeholder="01XXXXXXXXX"/></div>
         <div class="fg"><label>Transaction ID *</label><input type="text" id="pub-nc-trx" placeholder="TXN..."/></div>
+        
+        <div class="fg full">
+          <label>Terms & Conditions *</label>
+          <div class="terms-box">
+            <strong>১. সাধারণ যোগ্যতা ও শর্তাবলী</strong><br>
+            কমিটির যেকোনো পদে নির্বাচনের জন্য প্রার্থীকে অবশ্যই ESRC-এর একজন সক্রিয় সদস্য হতে হবে।<br><br>
+            <strong>বিশেষ পূর্বশর্ত (Mandatory Prerequisite):</strong><br>
+            গুরুত্বপূর্ণ পদের যোগ্যতা: প্রেসিডেন্ট, জেনারেল সেক্রেটারি, ভাইস প্রেসিডেন্ট কিংবা যেকোনো সম্পাদকীয় (Secretariat) পদে নির্বাচনের জন্য প্রার্থীকে অবশ্যই পূর্বে এক্সিকিউটিভ মেম্বার (Executive Member) হিসেবে দায়িত্ব পালনের অভিজ্ঞতা থাকতে হবে। অর্থাৎ, সাধারণ সদস্য থেকে সরাসরি শীর্ষ পদে নির্বাচন করা যাবে না; ধাপে ধাপে পদোন্নতি পেতে হবে।<br><br>
+            <strong>প্রেসিডেন্ট ও জেনারেল সেক্রেটারি পদের জন্য অতিরিক্ত যোগ্যতা:</strong><br>
+            ১. অভিজ্ঞতা: প্রার্থীর ন্যূনতম ১ থেকে ২ বছরের কাজের অভিজ্ঞতা থাকতে হবে।<br>
+            ২. অতীত অবদান: ESRC-এর বিগত কার্যক্রম ও উন্নতিতে প্রার্থীর প্রত্যক্ষ অবদান বা "Contributing Past" থাকতে হবে।<br>
+            ৩. পোর্টফোলিও ও প্রজেক্ট: প্রার্থীকে কমপক্ষে ২টি সম্পন্ন প্রজেক্ট প্রদর্শন করতে হবে। অথবা, নিম্নলিখিত ক্ষেত্রগুলোর যেকোনো একটিতে অসাধারণ দক্ষতা (Exceptional Skill) প্রমাণ করতে হবে:<br>
+            <ul>
+              <li>৩ডি ক্যাড ডিজাইন (3D CAD)</li>
+              <li>সার্কিট ডিজাইনিং (Circuit Designing)</li>
+              <li>গ্রাফিক্স ডিজাইনিং (Graphics Designing)</li>
+              <li>সি প্রোগ্রামিং-এ ভালো দখল (Good knowledge in C Programming)</li>
+              <li>ওয়েব ডেভেলপমেন্ট (Web Development)</li>
+              <li>ব্যাকএন্ড টেকনোলজি (Backend Technology)</li>
+              <li>মোবাইল অ্যাপ ডেভেলপমেন্ট (Mobile App Development)</li>
+            </ul>
+          </div>
+          <label style="display: flex; gap: 8px; align-items: start; margin-top: 12px; cursor: pointer;">
+            <input type="checkbox" id="pub-nc-terms" style="width: auto; margin-top: 2px;" />
+            <span style="font-size: 0.85rem; color: var(--md-on-surface-variant); line-height: 1.4; text-transform: none; font-weight: 500;">আমি উপরের সকল শর্তাবলী পড়েছি এবং মেনে নিচ্ছি। (I have read and agree to the terms and conditions)</span>
+          </label>
+        </div>
+        
         <div class="fg full"><label>Campaign Bio</label><textarea id="pub-nc-bio" placeholder="Short manifesto or vision statement..."></textarea></div>
       </div>
       <div style="margin-top: 24px;">
@@ -574,6 +617,12 @@ footer strong { color: var(--md-on-surface); font-family: var(--font-heading); f
       </div>
     </div>
 
+  </div>
+  
+  <div class="card" id="reg-closed-msg" style="display: none; max-width: 600px; margin: 0 auto; text-align: center;">
+    <div class="ei" style="font-size: 4rem; margin-bottom: 16px;">🛑</div>
+    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 8px; color: var(--md-on-surface);">Registration Closed</h3>
+    <p style="color: var(--md-on-surface-variant); line-height: 1.6;">The public registration window is currently closed. If you believe this is an error, please contact the election administrator.</p>
   </div>
 </div>
 
@@ -629,6 +678,10 @@ footer strong { color: var(--md-on-surface); font-family: var(--font-heading); f
         <p>Manage voters, candidates, and oversee real-time system metrics.</p>
       </div>
       <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <div class="toggle-wrap">
+          <span id="reg-lbl">Open Registration</span>
+          <label class="toggle"><input type="checkbox" id="reg-toggle" onchange="toggleRegistration()"/><span class="slider"></span></label>
+        </div>
         <div class="toggle-wrap">
           <span id="elec-lbl">Accepting Votes</span>
           <label class="toggle"><input type="checkbox" id="elec-toggle" onchange="toggleElection()"/><span class="slider"></span></label>
@@ -749,6 +802,7 @@ let candidates      = [];
 let votes           = {}; 
 let selections      = {}; 
 
+let registrationOpen = true;
 let electionOpen    = true;
 let liveResultsOpen = true; 
 let currentVoter    = null;
@@ -784,6 +838,7 @@ async function fetchData() {
     // 1. Fetch Settings
     const { data: settings } = await supabaseClient.from('election_settings').select('*').single();
     if(settings) {
+      registrationOpen = settings.registration_open !== false; // Default true if column missing
       electionOpen = settings.is_open;
       liveResultsOpen = settings.live_results_public;
       updateStatusUI();
@@ -842,25 +897,37 @@ async function fetchData() {
 function updateStatusUI() {
   const bar = document.getElementById('status-bar');
   const txt = document.getElementById('status-text');
-  const elecLbl = document.getElementById('elec-lbl');
+  
+  // Admin Toggles
+  const regToggle = document.getElementById('reg-toggle');
   const elecToggle = document.getElementById('elec-toggle');
-  const liveLbl = document.getElementById('live-lbl');
   const liveToggle = document.getElementById('live-toggle');
 
+  if(regToggle) regToggle.checked = registrationOpen;
   if(elecToggle) elecToggle.checked = electionOpen;
   if(liveToggle) liveToggle.checked = liveResultsOpen;
 
+  // Registration Page UI
+  const regWrapper = document.getElementById('reg-wrapper');
+  const regClosedMsg = document.getElementById('reg-closed-msg');
+  if(regWrapper && regClosedMsg) {
+    if(registrationOpen) {
+      regWrapper.style.display = '';
+      regClosedMsg.style.display = 'none';
+    } else {
+      regWrapper.style.display = 'none';
+      regClosedMsg.style.display = 'block';
+    }
+  }
+
+  // Header UI
   if(electionOpen) {
     bar.className = '';
     txt.textContent = 'System Active: Secure Voting is currently OPEN';
-    if(elecLbl) elecLbl.textContent = 'Accepting Votes';
   } else {
     bar.className = 'closed';
     txt.textContent = 'System Locked: Secure Voting is CLOSED';
-    if(elecLbl) elecLbl.textContent = 'Election Closed';
   }
-  
-  if(liveLbl) liveLbl.textContent = liveResultsOpen ? 'Public Live Results' : 'Results Hidden';
 }
 
 // ── PAGE NAVIGATION ──────────────────────────────────
@@ -926,8 +993,10 @@ async function submitPublicCandidate() {
   const pay      = document.getElementById('pub-nc-pay').value.trim();
   const trx      = document.getElementById('pub-nc-trx').value.trim();
   const bio      = document.getElementById('pub-nc-bio').value.trim();
+  const termsBox = document.getElementById('pub-nc-terms');
   
   if(!name || !pos || !pay || !trx) { toast('Name, Target Position, and Payment details are required.', true); return; }
+  if(!termsBox.checked) { toast('আপনাকে অবশ্যই শর্তাবলীতে সম্মতি দিতে হবে।', true); return; }
   
   setBtnLoading('btn-pub-add-cand', true);
   
@@ -943,6 +1012,7 @@ async function submitPublicCandidate() {
 
   ['pub-nc-name','pub-nc-sid','pub-nc-dept','pub-nc-batch','pub-nc-image','pub-nc-pay','pub-nc-trx','pub-nc-bio'].forEach(f => document.getElementById(f).value = '');
   document.getElementById('pub-nc-pos').value = '';
+  termsBox.checked = false;
   
   await fetchData();
   toast('Candidate Application submitted! Awaiting Admin Approval.');
@@ -1142,6 +1212,13 @@ async function submitVote() {
 }
 
 // ── ADMIN CONTROLS ───────────────────────────────────
+async function toggleRegistration() {
+  registrationOpen = document.getElementById('reg-toggle').checked;
+  await supabaseClient.from('election_settings').update({registration_open: registrationOpen}).eq('id', 1);
+  updateStatusUI();
+  toast(registrationOpen ? 'Registration is now OPEN.' : 'Registration is now CLOSED.');
+}
+
 async function toggleElection() {
   electionOpen = document.getElementById('elec-toggle').checked;
   await supabaseClient.from('election_settings').update({is_open: electionOpen}).eq('id', 1);
