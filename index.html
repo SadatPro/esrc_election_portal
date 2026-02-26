@@ -225,30 +225,38 @@ select option { background: #06402b; color: #fff; }
 .pos-rule { font-size: 14px; color: var(--text-sec); font-weight: 500; display: inline-flex; align-items: center; gap: 8px;}
 .auto-tag { display: inline-flex; align-items: center; background: var(--warning-glass); color: var(--warning); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 4px 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;}
 
-/* ── CANDIDATE CARDS ── */
-.cands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-.cand { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 32px 20px; cursor: pointer; transition: all 0.2s ease; text-align: center; position: relative; user-select: none; display: flex; flex-direction: column; align-items: center; }
+/* ── CANDIDATE CARDS (BALLOT) ── */
+.cands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+.cand { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: 32px 20px; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; position: relative; user-select: none; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-sm); overflow: hidden;}
 .cand:hover { background: rgba(0,0,0,0.4); border-color: var(--glass-border-light); transform: translateY(-4px); }
-.cand.sel { background: var(--primary-subtle); border-color: var(--primary); box-shadow: 0 8px 32px var(--primary-glow); transform: translateY(-4px); }
-.cand-radio { position: absolute; top: 16px; right: 16px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--text-tertiary); background: rgba(0,0,0,0.5); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-.cand.sel .cand-radio { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 10px var(--primary);}
-.cand.sel .cand-radio::after { content: ''; width: 10px; height: 10px; background: #000; border-radius: 50%; animation: scaleIn 0.2s ease;}
+.cand.sel { border-color: var(--primary); background: #ffffff; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15), 0 0 0 2px var(--primary) inset; transform: translateY(-4px); }
+.cand-radio { position: absolute; top: 20px; right: 20px; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); background: var(--surface); transition: all 0.2s; display: flex; align-items: center; justify-content: center; z-index: 2;}
+.cand.sel .cand-radio { border-color: var(--primary); background: var(--primary); }
+.cand.sel .cand-radio::after { content: ''; width: 12px; height: 12px; background: #fff; border-radius: 50%; animation: scaleIn 0.2s ease;}
+.cav { width: 140px; height: 140px; border-radius: 50%; background-color: var(--surface-alt); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: 800; font-family: var(--font-heading); margin-bottom: 24px; transition: all 0.3s ease; border: 4px solid var(--surface-alt); position: relative; z-index: 1; box-shadow: var(--shadow-md); overflow: hidden; flex-shrink: 0; }
+.cand:hover .cav { border-color: var(--primary-light); }
+.cand.sel .cav { border-color: var(--primary); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transform: scale(1.05); }
+.cname { font-weight: 800; font-size: 1.25rem; color: var(--text-main); margin-bottom: 6px; font-family: var(--font-heading); line-height: 1.2; letter-spacing: -0.2px; z-index: 1;}
+.cmeta { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; font-family: var(--font-mono); z-index: 1;}
+.cbio { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; padding-top: 20px; border-top: 1px solid var(--border); width: 100%; margin-top: auto; z-index: 1;}
+.cand.sel .cbio { border-color: rgba(16, 185, 129, 0.2); color: var(--primary-dark); font-weight: 500;}
 
-.cav { width: 110px; height: 110px; border-radius: 50%; background-color: rgba(0,0,0,0.3); color: var(--text-sec); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 800; margin-bottom: 20px; transition: all 0.3s ease; border: 3px solid var(--glass-border); position: relative; z-index: 1; overflow: hidden; flex-shrink: 0; }
-.cand:hover .cav { border-color: var(--glass-border-light); }
-.cand.sel .cav { border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); transform: scale(1.05); color: var(--primary); }
-
-.cname { font-weight: 800; font-size: 18px; color: var(--text-main); margin-bottom: 4px; font-family: var(--font-heading); }
-.cmeta { font-size: 14px; color: var(--text-sec); margin-bottom: 16px; font-family: var(--font-mono); }
-.cbio { font-size: 14px; color: var(--text-tertiary); line-height: 1.5; padding-top: 16px; border-top: 1px solid var(--glass-border); width: 100%; margin-top: auto; font-style: italic; }
-.cand.sel .cbio { border-color: rgba(0, 230, 118, 0.3); color: var(--text-main); }
+/* ── CANDIDATE PROFILE CARDS (PUBLIC) ── */
+.cp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; margin-bottom: 48px; }
+.cp-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: 32px 24px; box-shadow: var(--shadow-glass); display: flex; flex-direction: column; align-items: center; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: transform 0.2s; }
+.cp-card:hover { transform: translateY(-4px); border-color: var(--glass-border-light); }
+.cp-img { width: 120px; height: 120px; border-radius: 50%; background-color: rgba(0,0,0,0.3); border: 3px solid var(--primary); margin-bottom: 20px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 800; color: var(--text-sec); box-shadow: 0 0 20px var(--primary-glow); flex-shrink: 0;}
+.cp-name { font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.3px; }
+.cp-meta { font-size: 14px; color: var(--text-sec); font-family: var(--font-mono); margin-bottom: 20px; }
+.cp-bio { font-size: 14px; color: var(--text-main); line-height: 1.6; text-align: left; background: rgba(0,0,0,0.2); padding: 20px; border-radius: var(--radius-md); width: 100%; border: 1px solid var(--glass-border); flex-grow: 1; font-style: italic; }
+.cp-section-title { font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border-light); }
 
 /* ── SUBMIT ZONE ── */
 .submit-zone { background: var(--glass-bg); backdrop-filter: blur(16px); border-radius: var(--radius-lg); padding: 48px; text-align: center; margin-top: 40px; box-shadow: var(--shadow-glass); border: 1px solid var(--glass-border); position: relative; overflow: hidden;}
 .submit-zone::after { content: ''; position: absolute; left: -50px; bottom: -50px; width: 200px; height: 200px; background: radial-gradient(circle, var(--primary-subtle), transparent 70%); pointer-events: none; }
 .submit-zone h3 { font-family: var(--font-heading); font-size: 28px; margin-bottom: 12px; font-weight: 800; color: var(--text-main);}
 .submit-zone p { font-size: 16px; color: var(--text-sec); margin-bottom: 32px; }
-.sel-summary { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 24px; margin-bottom: 32px; text-align: left; font-size: 15px; line-height: 1.6; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; position: relative; z-index: 1;}
+.sel-summary { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 24px 32px; margin-bottom: 40px; text-align: left; font-size: 15px; line-height: 1.6; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; position: relative; z-index: 1;}
 .sel-summary b { color: var(--text-sec); font-weight: 600; display: block; font-size: 12px; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 1px;}
 .sel-summary div { color: var(--text-main); font-weight: 700; font-size: 16px;}
 .sel-summary .miss { background: var(--danger-glass); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--danger); }
@@ -280,6 +288,8 @@ select option { background: #06402b; color: #fff; }
 .live-refresh { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
 .refresh-badge { display: flex; align-items: center; gap: 10px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-pill); padding: 10px 20px; font-size: 14px; font-weight: 600; backdrop-filter: blur(8px); }
 .refresh-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); animation: blink 1.4s infinite; box-shadow: 0 0 10px var(--primary);}
+.btn-refresh-now { background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border); border-radius: var(--radius-pill); padding: 10px 24px; font-size: 14px; font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm);}
+.btn-refresh-now:hover { background: var(--glass-bg-hover); border-color: var(--glass-border-light); color: var(--primary);}
 
 .live-overall { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 48px; }
 .ov-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 32px 24px; text-align: center; box-shadow: var(--shadow-glass); backdrop-filter: blur(8px);}
@@ -306,7 +316,7 @@ select option { background: #06402b; color: #fff; }
 .lcr-pct { font-size: 28px; font-weight: 800; color: var(--text-main); white-space: nowrap; text-align: right; font-family: var(--font-heading); }
 .live-cand-row.leading .lcr-pct { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);}
 .lcr-votes { font-size: 14px; color: var(--text-sec); text-align: right; font-weight: 600; margin-top: 4px; }
-.runner-assign { background: var(--warning-glass); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 24px; font-size: 14px; color: #FFD600; display: flex; gap: 12px; align-items: flex-start; }
+.runner-assign { background: var(--warning-glass); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 24px; font-size: 14px; color: #FFD600; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm);}
 
 /* ── SEGMENTED CONTROL (GLASS) ── */
 .atabs { display: flex; background: rgba(0,0,0,0.3); padding: 4px; border-radius: var(--radius-pill); margin-bottom: 32px; border: 1px solid var(--glass-border);}
@@ -369,7 +379,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
   .progress-tracker { flex-direction: column; align-items: stretch; padding: 16px; gap: 12px; }
   .pt-label, .pt-count { text-align: center; }
   
-  .cands-grid { grid-template-columns: 1fr; gap: 16px; }
+  .cands-grid, .cp-grid { grid-template-columns: 1fr; gap: 16px; }
   .cand { padding: 24px 16px; }
   .cav { width: 90px; height: 90px; font-size: 28px; margin-bottom: 16px;}
   
@@ -394,6 +404,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
 }
 </style>
 
+<!-- Add Supabase JS Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -419,6 +430,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
       <div class="logo-l1">ESRC Portal</div>
     </div>
     <div class="hdr-r">
+      <button class="btn-hdr" onclick="showPage('candidates-list')">Candidates</button>
       <button class="btn-hdr" onclick="showPage('register')">Register</button>
       <button class="btn-hdr btn-live" onclick="showPage('live')">Results</button>
       <button class="btn-hdr" onclick="showPage('admin')">Admin</button>
@@ -509,6 +521,18 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
     </div>
   </div>
 
+</div>
+
+<!-- ══ CANDIDATES LIST PAGE ══ -->
+<div id="page-candidates-list" class="page">
+  <div class="live-hero" style="margin-bottom: 40px;">
+    <div class="live-icon">🧑‍💻</div>
+    <div class="live-hero-txt">
+      <h2>Meet the Candidates</h2>
+      <p>Explore the profiles and manifestos of all approved candidates running for the ESRC Committee Elections 2026–2027.</p>
+    </div>
+  </div>
+  <div id="candidates-list-body"></div>
 </div>
 
 <!-- ══ PUBLIC REGISTRATION PAGE ══ -->
@@ -616,12 +640,12 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
   <div class="live-hero">
     <div class="live-icon">📡</div>
     <div class="live-hero-txt">
-      <h2>Live Results</h2>
+      <h2>Live Results Dashboard</h2>
       <p>Real-time vote counting for all positions. Percentages represent the share of total votes cast for that specific role.</p>
     </div>
     <div class="live-meta">
       <div class="lm-voted" id="lv-voted">0</div>
-      <div class="lm-label">Total Votes</div>
+      <div class="lm-label">Total Votes Cast</div>
       <div class="lm-pct" id="lv-pct">of 0 registered</div>
     </div>
   </div>
@@ -631,7 +655,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
       <span class="refresh-dot"></span>
       Updating in <span style="font-weight:700; color:var(--primary); margin:0 6px;" id="lv-countdown">10</span>s
     </div>
-    <button class="btn-refresh-now" onclick="renderLive()" id="btn-refresh">Refresh Now</button>
+    <button class="btn btn-o btn-refresh-now" onclick="renderLive()" id="btn-refresh">Refresh Now</button>
     <div style="margin-left:auto;font-size:13px;color:var(--text-sec);" id="lv-lastupdate">—</div>
   </div>
 
@@ -863,6 +887,8 @@ async function fetchData() {
     const activeVotersCount = voters.filter(v => v.isApproved).length;
     document.getElementById('total-pill').textContent = activeVotersCount;
     
+    renderCandidatesPage(); // Update Public Candidates Tab
+
     if(document.getElementById('page-admin').classList.contains('active')) {
       renderVoterTable(); 
       renderCandTable();
@@ -918,7 +944,7 @@ function updateStatusUI() {
 function showPage(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
   document.getElementById('page-' + p).classList.add('active');
-  document.getElementById('hero-section').style.display = (p === 'voter' || p === 'register') ? '' : 'none';
+  document.getElementById('hero-section').style.display = (p === 'voter' || p === 'register' || p === 'candidates-list') ? '' : 'none';
   if(p === 'voter') resetGate();
   if(p === 'live') {
     startLiveRefresh();
@@ -933,6 +959,41 @@ function switchRegTab(type, btn) {
   btn.classList.add('active');
   document.getElementById('reg-voter-form').style.display = type === 'voter' ? '' : 'none';
   document.getElementById('reg-cand-form').style.display = type === 'candidate' ? '' : 'none';
+}
+
+// ── PUBLIC CANDIDATES LIST ─────────────────────────
+function renderCandidatesPage() {
+  const body = document.getElementById('candidates-list-body');
+  const activeCandidates = candidates.filter(c => c.isApproved);
+  
+  if(!activeCandidates.length) {
+    body.innerHTML = '<div class="card"><div class="empty"><div class="ei">🪫</div><p>No approved candidates available yet.</p></div></div>';
+    return;
+  }
+
+  let html = '';
+  POSITIONS.forEach(pos => {
+    const posCands = activeCandidates.filter(c => c.position === pos.name);
+    if(!posCands.length) return;
+
+    html += `
+      <div class="cp-section-title">${esc(pos.name)}</div>
+      <div class="cp-grid">
+        ${posCands.map(c => `
+          <div class="cp-card">
+            <div class="cp-img" ${c.imageUrl ? `style="background-image: url('${esc(c.imageUrl)}');"` : ''}>
+              ${c.imageUrl ? '' : c.name.trim()[0]}
+            </div>
+            <div class="cp-name">${esc(c.name)}</div>
+            <div class="badge bg" style="margin-bottom: 12px; font-size: 13px;">${esc(c.position)}</div>
+            <div class="cp-meta">${esc(c.batch)} &middot; ${esc(c.dept)}</div>
+            <div class="cp-bio">"${esc(c.bio || 'No manifesto provided.')}"</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  });
+  body.innerHTML = html;
 }
 
 // ── PUBLIC REGISTRATION FLOW ─────────────────────────
@@ -1392,6 +1453,7 @@ function aggregateResults() {
   });
 
   const posMap = {};
+  // Only tally votes for approved candidates
   candidates.filter(c => c.isApproved).forEach(c => {
     if(!posMap[c.position]) posMap[c.position] = [];
     posMap[c.position].push({...c, vc: vcounts[c.id] || 0});
@@ -1557,7 +1619,7 @@ function renderLive() {
             </div>
           </div>`;
       }).join('')}
-      ${pos.runnerUpRole && runnerup && runnerup.vc > 0 ? `
+            ${pos.runnerUpRole && runnerup && runnerup.vc > 0 ? `
         <div class="runner-assign">
           <span>⚡</span>
           <span>Based on current projections, <strong>${esc(runnerup.name)}</strong> tracks for <strong>${esc(pos.runnerUpRole)}</strong>.</span>
