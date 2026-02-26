@@ -1331,8 +1331,9 @@ async function addVoter() {
 
 async function approveVoter(id) {
   if(!confirm('Approve this voter?')) return;
-  const { error } = await supabaseClient.from('voters').update({ is_approved: true }).eq('id', id);
+  const { data, error } = await supabaseClient.from('voters').update({ is_approved: true }).eq('id', id).select();
   if(error) { toast(error.message, true); return; }
+  if(!data || data.length === 0) { toast('Error: Permission denied. Check Supabase UPDATE policies.', true); return; }
   await fetchData();
   toast('Voter Approved.');
 }
@@ -1345,8 +1346,9 @@ async function editVoter(id) {
   const newSid = prompt("Edit Student ID:", v.sid);
   if (newSid === null || newSid.trim() === '') return;
   
-  const { error } = await supabaseClient.from('voters').update({ full_name: newName.trim(), student_id: newSid.trim() }).eq('id', id);
+  const { data, error } = await supabaseClient.from('voters').update({ full_name: newName.trim(), student_id: newSid.trim() }).eq('id', id).select();
   if(error) { toast(error.message, true); return; }
+  if(!data || data.length === 0) { toast('Error: Permission denied. Check Supabase UPDATE policies.', true); return; }
   await fetchData();
   toast('Voter updated.');
 }
@@ -1395,8 +1397,9 @@ function renderVoterTable() {
 // ── ADMIN: CANDIDATES ────────────────────────────────
 async function approveCandidate(id) {
   if(!confirm('Approve this candidate?')) return;
-  const { error } = await supabaseClient.from('candidates').update({ is_approved: true }).eq('id', id);
+  const { data, error } = await supabaseClient.from('candidates').update({ is_approved: true }).eq('id', id).select();
   if(error) { toast(error.message, true); return; }
+  if(!data || data.length === 0) { toast('Error: Permission denied. Check Supabase UPDATE policies.', true); return; }
   await fetchData();
   toast('Candidate Approved.');
 }
@@ -1407,8 +1410,9 @@ async function editCandidate(id) {
   const newName = prompt("Edit Candidate Name:", c.name);
   if (newName === null || newName.trim() === '') return;
   
-  const { error } = await supabaseClient.from('candidates').update({ full_name: newName.trim() }).eq('id', id);
+  const { data, error } = await supabaseClient.from('candidates').update({ full_name: newName.trim() }).eq('id', id).select();
   if(error) { toast(error.message, true); return; }
+  if(!data || data.length === 0) { toast('Error: Permission denied. Check Supabase UPDATE policies.', true); return; }
   await fetchData();
   toast('Candidate updated.');
 }
