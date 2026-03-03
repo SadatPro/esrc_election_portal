@@ -120,11 +120,11 @@ body::after {
 header { background: rgba(2, 26, 18, 0.6); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); position: sticky; top: 0; z-index: 300; border-bottom: 1px solid var(--glass-border); }
 .hdr { max-width: 1040px; margin: 0 auto; padding: 0 24px; height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; flex-shrink: 0;}
-.logo-ico { width: 60px; height: 60px; background: rgb(255, 255, 255); border: 1px solid var(--glass-border-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 230, 118, 0.2); backdrop-filter: blur(10px); flex-shrink: 0;}
+.logo-ico { width: 60px; height: 60px; background: rgba(255, 255, 255, 0.5); border: 1px solid var(--glass-border-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 230, 118, 0.2); backdrop-filter: blur(10px); flex-shrink: 0;}
 .logo-ico img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
 .logo-l1 { font-family: var(--font-heading); font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); }
 .hdr-r { display: flex; align-items: center; gap: 12px; }
-.btn-hdr { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); padding: 8px 18px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.btn-hdr { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-main); padding: 8px 18px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
 .btn-hdr:hover { background: var(--glass-bg-hover); border-color: var(--glass-border-light); }
 .btn-live { background: var(--primary-subtle); border-color: var(--primary); color: var(--primary); }
 .btn-live:hover { background: rgba(0, 230, 118, 0.25); }
@@ -157,7 +157,7 @@ main { max-width: 1040px; margin: 40px auto 80px; padding: 0 24px; position: rel
 .fg { display: flex; flex-direction: column; gap: 8px; text-align: left; justify-content: flex-start;}
 .fg.full { grid-column: 1 / -1; }
 label { font-size: 13px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.5px;}
-input[type=text], input[type=email], input[type=password], select, textarea { 
+input[type=text], input[type=email], input[type=password], input[type=url], input[type=number], select, textarea { 
   width: 100%; padding: 14px 16px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); 
   font-size: 16px; font-family: var(--font-body); color: var(--text-main); background: rgba(0,0,0,0.2); transition: all 0.2s; box-sizing: border-box;
 }
@@ -168,10 +168,16 @@ select option { background: #06402b; color: #fff; }
 /* Terms Box */
 .terms-box {
   background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
-  padding: 16px; max-height: 200px; overflow-y: auto; font-size: 14px; color: var(--text-sec); line-height: 1.6;
+  padding: 16px; max-height: 250px; overflow-y: auto; font-size: 14px; color: var(--text-sec); line-height: 1.6;
 }
 .terms-box strong { color: var(--text-main); }
 .terms-box ul { padding-left: 20px; margin: 8px 0;}
+.terms-box li { margin-bottom: 6px; }
+
+/* ── CHECKBOXES ── */
+.formality-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; cursor: pointer; color: var(--text-main); font-size: 15px; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--glass-border); transition: all 0.2s;}
+.formality-item:hover { background: rgba(255,255,255,0.06); border-color: var(--glass-border-light); }
+.formality-cb { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; margin: 0;}
 
 /* ── BUTTONS ── */
 .btn { padding: 14px 28px; border-radius: var(--radius-pill); border: none; cursor: pointer; font-size: 16px; font-weight: 700; font-family: var(--font-body); transition: all 0.2s cubic-bezier(0.1, 0.8, 0.3, 1); display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
@@ -239,7 +245,6 @@ select option { background: #06402b; color: #fff; }
 .cand.sel .cand-radio { border-color: var(--primary); background: var(--primary); }
 .cand.sel .cand-radio::after { content: ''; width: 12px; height: 12px; background: #fff; border-radius: 50%; animation: scaleIn 0.2s ease;}
 
-/* Updated Avatar/Image handling - Large Profile Picture Style */
 .cav { width: 140px; height: 140px; border-radius: 50%; background-color: var(--surface-alt); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: 800; font-family: var(--font-heading); margin-bottom: 24px; transition: all 0.3s ease; border: 4px solid var(--surface-alt); position: relative; z-index: 1; box-shadow: var(--shadow-md); overflow: hidden; flex-shrink: 0; }
 .cand:hover .cav { border-color: var(--primary-light); }
 .cand.sel .cav { border-color: var(--primary); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); transform: scale(1.05); }
@@ -464,7 +469,9 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
     <div class="hdr-r">
       <button class="btn-hdr btn-live" onclick="showPage('voter')">🗳️ Vote</button>
       <button class="btn-hdr" onclick="showPage('candidates-list')">Candidates</button>
+      <button class="btn-hdr" onclick="showPage('guidelines')">Guidelines</button>
       <button class="btn-hdr" onclick="showPage('register')">Register</button>
+      <button class="btn-hdr" onclick="showPage('payment')">💳 Payment</button>
       <button class="btn-hdr" onclick="showPage('live')">Results</button>
       <button class="btn-hdr" onclick="showPage('admin')">Admin</button>
     </div>
@@ -575,16 +582,35 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
   <div id="candidates-list-body"></div>
 </div>
 
+<!-- ══ ELECTION GUIDELINES PAGE ══ -->
+<div id="page-guidelines" class="page">
+  <div class="live-hero" style="margin-bottom: 40px; justify-content: space-between; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; gap: 32px;">
+      <div class="live-icon">📄</div>
+      <div class="live-hero-txt">
+        <h2>Election Guidelines</h2>
+        <p>Read the official rules and regulations for the ESRC Committee Elections 2026-2027.</p>
+      </div>
+    </div>
+    <div>
+      <a href="https://docs.google.com/document/d/1d46FXWa8FoVuqKWHoZFdBOtPES-SGhhxRwt_Gz3JsQ4/export?format=pdf" class="btn btn-p" style="text-decoration: none;">⬇️ Download PDF</a>
+    </div>
+  </div>
+  <div class="card" style="padding: 0; overflow: hidden; height: 75vh; border-radius: var(--radius-lg);">
+    <iframe src="https://docs.google.com/document/d/1d46FXWa8FoVuqKWHoZFdBOtPES-SGhhxRwt_Gz3JsQ4/preview" width="100%" height="100%" style="border: none; background: #fff;"></iframe>
+  </div>
+</div>
+
 <!-- ══ PUBLIC REGISTRATION PAGE ══ -->
 <div id="page-register" class="page">
-  <div class="card gate-wrap" style="max-width: 640px;" id="reg-wrapper">
+  <div class="card gate-wrap" style="max-width: 720px;" id="reg-wrapper">
     <div class="gate-icon">📝</div>
     <div class="gate-title">Registration</div>
     <div class="gate-sub">Register yourself as a voter or apply as a candidate. All submissions require admin approval.</div>
     
     <div class="atabs" style="margin-bottom: 32px;">
-      <button class="atab active" onclick="switchRegTab('voter', this)">Voter</button>
-      <button class="atab" onclick="switchRegTab('candidate', this)">Candidate</button>
+      <button class="atab active" onclick="switchRegTab('voter', this)">Voter Registration</button>
+      <button class="atab" onclick="switchRegTab('candidate', this)">Candidate Application</button>
     </div>
 
     <!-- PUBLIC VOTER FORM -->
@@ -594,10 +620,10 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
         <div class="fg"><label>Student ID *</label><input type="text" id="pub-nv-sid" placeholder="e.g. 241-15-519"/></div>
         <div class="fg"><label>Email</label><input type="email" id="pub-nv-email" placeholder="name@diu.edu.bd"/></div>
         <div class="fg"><label>Department</label><input type="text" id="pub-nv-dept" placeholder="e.g. CSE"/></div>
-        <div class="fg"><label>Batch</label><input type="text" id="pub-nv-batch" placeholder="e.g. Batch 65"/></div>
+        <div class="fg full"><label>Batch</label><input type="text" id="pub-nv-batch" placeholder="e.g. Batch 65"/></div>
       </div>
       <div style="margin-top: 32px;">
-        <button class="btn btn-p" style="width: 100%;" id="btn-pub-add-voter" onclick="submitPublicVoter()">Submit Registration</button>
+        <button class="btn btn-p" style="width: 100%; padding: 16px; font-size: 18px;" id="btn-pub-add-voter" onclick="submitPublicVoter()">Submit Registration</button>
       </div>
     </div>
 
@@ -605,7 +631,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
     <div id="reg-cand-form" style="display:none; text-align: left;">
       <div class="form-grid">
         <div class="fg"><label>Full Name *</label><input type="text" id="pub-nc-name" placeholder="Candidate Name"/></div>
-        <div class="fg"><label>Student ID</label><input type="text" id="pub-nc-sid" placeholder="e.g. 241-15-519"/></div>
+        <div class="fg"><label>Student ID *</label><input type="text" id="pub-nc-sid" placeholder="e.g. 241-15-519"/></div>
         <div class="fg"><label>Target Position *</label>
           <select id="pub-nc-pos">
             <option value="">— Select Target Position —</option>
@@ -628,32 +654,33 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
         <div class="fg"><label>Department</label><input type="text" id="pub-nc-dept" placeholder="e.g. CSE"/></div>
         <div class="fg"><label>Batch</label><input type="text" id="pub-nc-batch" placeholder="e.g. Batch 65"/></div>
         <div class="fg"><label>Image URL</label><input type="text" id="pub-nc-image" placeholder="https://example.com/image.jpg"/></div>
+        <div class="fg"><label>Portfolio Link</label><input type="url" id="pub-nc-portfolio" placeholder="e.g. GitHub, LinkedIn, Drive"/></div>
         
-        <div class="fg full" style="margin-top: 8px;">
-          <label>Payment Details (Send Money Only) *</label>
-          <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 8px;">
-            <div style="font-size: 15px; color: var(--text-main); margin-bottom: 12px; font-weight: 500;">Please <strong>Send Money</strong> to one of the following numbers for your registration fee:</div>
-            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-              <div style="display: flex; align-items: center; gap: 8px; background: rgba(226, 19, 110, 0.15); border: 1px solid rgba(226, 19, 110, 0.3); padding: 8px 16px; border-radius: 8px; color: #fff; font-size: 15px;">
-                <span style="font-weight: 800; color: #e2136e; letter-spacing: 0.5px;">bKash:</span> <span style="font-family: var(--font-mono); font-weight: 600; letter-spacing: 1px;">01645479277</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 8px; background: rgba(247, 102, 34, 0.15); border: 1px solid rgba(247, 102, 34, 0.3); padding: 8px 16px; border-radius: 8px; color: #fff; font-size: 15px;">
-                <span style="font-weight: 800; color: #f76622; letter-spacing: 0.5px;">Nagad:</span> <span style="font-family: var(--font-mono); font-weight: 600; letter-spacing: 1px;">01309250507</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="fg"><label>Sender Number (bKash/Nagad) *</label><input type="text" id="pub-nc-pay" placeholder="e.g. 01XXXXXXXXX"/></div>
-        <div class="fg"><label>Transaction ID *</label><input type="text" id="pub-nc-trx" placeholder="Enter TXN ID..."/></div>
-        
-        <div class="fg full">
-          <label>Terms & Conditions</label>
+        <div class="fg full"><label>Campaign Bio</label><textarea id="pub-nc-bio" placeholder="Short manifesto or vision statement..." style="min-height: 80px;"></textarea></div>
+
+        <!-- TERMS AND CONDITIONS -->
+        <div class="fg full" style="margin-top: 16px;">
+          <label style="font-size: 16px; color: var(--primary);">Terms & Conditions *</label>
           <div class="terms-box">
             <strong>১. সাধারণ যোগ্যতা ও শর্তাবলী</strong><br>
             কমিটির যেকোনো পদে নির্বাচনের জন্য প্রার্থীকে অবশ্যই ESRC-এর একজন সক্রিয় সদস্য হতে হবে।<br><br>
+            
+            <strong>কার্যনির্বাহী পরিষদ (Executive Committee) নির্বাচনে অংশগ্রহণের বিশেষ শর্ত:</strong><br>
+            <ul>
+              <li>পূর্বে সংগঠনে কাজ করেছে এমন সদস্যরা স্বাভাবিক নিয়মে কার্যনির্বাহী পরিষদ নির্বাচনে অংশ নিতে পারবে।</li>
+              <li>নতুনভাবে যোগদানকারী সদস্যদের (ব্যাচ ৬৬ থেকে ৬৩) ক্ষেত্রেও কার্যনির্বাহী পরিষদ নির্বাচনে অংশগ্রহণের সুযোগ থাকবে।</li>
+              <li>তবে নতুন সদস্যদের ক্ষেত্রে অন্তত একটি বিশেষ শর্ত পূরণ করতে হবে:
+                <ul>
+                  <li>একাডেমিক সিজিপিএ ৩.৫০ বা তার বেশি থাকতে হবে <strong>অথবা</strong></li>
+                  <li>সংগঠন, নেতৃত্ব, প্রযুক্তি, সাংস্কৃতিক বা অন্যান্য ক্ষেত্রে প্রমাণিত Exceptional Skill থাকতে হবে।</li>
+                </ul>
+              </li>
+            </ul>
+            <strong>এই শর্ত সংযোজনের উদ্দেশ্য:</strong> সংগঠনে নতুন ও মেধাবী সদস্যদের অংশগ্রহণ উৎসাহিত করা এবং ভবিষ্যৎ নেতৃত্ব গড়ে তোলা, একই সঙ্গে অভিজ্ঞতা ও যোগ্যতার ভারসাম্য বজায় রাখা।<br><br>
+
             <strong>বিশেষ পূর্বশর্ত (Mandatory Prerequisite):</strong><br>
             গুরুত্বপূর্ণ পদের যোগ্যতা: প্রেসিডেন্ট, জেনারেল সেক্রেটারি, ভাইস প্রেসিডেন্ট কিংবা যেকোনো সম্পাদকীয় (Secretariat) পদে নির্বাচনের জন্য প্রার্থীকে অবশ্যই পূর্বে এক্সিকিউটিভ মেম্বার (Executive Member) হিসেবে দায়িত্ব পালনের অভিজ্ঞতা থাকতে হবে। অর্থাৎ, সাধারণ সদস্য থেকে সরাসরি শীর্ষ পদে নির্বাচন করা যাবে না; ধাপে ধাপে পদোন্নতি পেতে হবে।<br><br>
+            
             <strong>প্রেসিডেন্ট ও জেনারেল সেক্রেটারি পদের জন্য অতিরিক্ত যোগ্যতা:</strong><br>
             ১. অভিজ্ঞতা: প্রার্থীর ন্যূনতম ১ থেকে ২ বছরের কাজের অভিজ্ঞতা থাকতে হবে।<br>
             ২. অতীত অবদান: ESRC-এর বিগত কার্যক্রম ও উন্নতিতে প্রার্থীর প্রত্যক্ষ অবদান বা "Contributing Past" থাকতে হবে।<br>
@@ -670,14 +697,13 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
           </div>
           <label style="display: flex; gap: 12px; align-items: flex-start; margin-top: 16px; cursor: pointer; text-transform: none; font-weight: normal; color: var(--text-main);">
             <input type="checkbox" id="pub-nc-terms" style="margin-top: 4px; width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--primary);" />
-            <span style="font-size: 15px; line-height: 1.5;">আমি উপরের সকল শর্তাবলী পড়েছি এবং মেনে নিচ্ছি। (I have read and agree to the terms and conditions)</span>
+            <span style="font-size: 15px; line-height: 1.5;">আমি উপরের সকল শর্তাবলী পড়েছি এবং মেনে নিচ্ছি।</span>
           </label>
         </div>
-        
-        <div class="fg full"><label>Campaign Bio</label><textarea id="pub-nc-bio" placeholder="Short manifesto or vision statement..."></textarea></div>
       </div>
+      
       <div style="margin-top: 32px;">
-        <button class="btn btn-p" style="width: 100%;" id="btn-pub-add-cand" onclick="submitPublicCandidate()">Submit Application</button>
+        <button class="btn btn-p" style="width: 100%; padding: 18px; font-size: 18px; letter-spacing: 0.5px;" id="btn-pub-add-cand" onclick="submitPublicCandidate()">Submit Application</button>
       </div>
     </div>
 
@@ -687,6 +713,70 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
     <div class="ei" style="font-size: 64px; margin-bottom: 24px;">🛑</div>
     <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 12px;">Registration Closed</h3>
     <p style="color: var(--text-sec); font-size: 16px;">The public registration window is currently closed. If you believe this is an error, please contact the election administrator.</p>
+  </div>
+</div>
+
+<!-- ══ PAYMENT PAGE ══ -->
+<div id="page-payment" class="page">
+  <div class="card gate-wrap" style="max-width: 720px;">
+    <div class="gate-icon">💳</div>
+    <div class="gate-title">Submit Payment</div>
+    <div class="gate-sub">Only for candidates who have been approved by the Admin. Select your required formalities, pay the exact fee, and submit your TrxID here.</div>
+    
+    <div style="background: rgba(0, 230, 118, 0.05); border: 1px solid var(--primary); border-radius: var(--radius-md); padding: 32px; margin-bottom: 32px; box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.05); text-align: left;">
+      <div style="font-size: 15px; color: var(--text-main); margin-bottom: 16px; font-weight: 500;">Please <strong>Send Money</strong> to one of the following numbers:</div>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(226, 19, 110, 0.15); border: 1px solid rgba(226, 19, 110, 0.3); padding: 10px 20px; border-radius: 8px; color: #fff; font-size: 16px;">
+          <span style="font-weight: 800; color: #e2136e; letter-spacing: 0.5px;">bKash:</span> <span style="font-family: var(--font-mono); font-weight: 600; letter-spacing: 1px;">01645479277</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; background: rgba(247, 102, 34, 0.15); border: 1px solid rgba(247, 102, 34, 0.3); padding: 10px 20px; border-radius: 8px; color: #fff; font-size: 16px;">
+          <span style="font-weight: 800; color: #f76622; letter-spacing: 0.5px;">Nagad:</span> <span style="font-family: var(--font-mono); font-weight: 600; letter-spacing: 1px;">01309250507</span>
+        </div>
+      </div>
+
+      <!-- POST ELECTION FORMALITIES IN PAYMENT -->
+      <div class="fg full" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--glass-border);">
+        <label style="font-size: 16px; color: var(--primary);">নির্বাচন পরবর্তী আনুষ্ঠানিকতা (Post-Election Formalities Fee)</label>
+        <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 20px; color: var(--text-sec); font-size: 14px; margin-top: 8px;">
+          <p style="margin-bottom: 16px; color: var(--text-main); font-size: 15px;">নির্বাচনে বিজয়ী বা মনোনীত প্রার্থীদের জন্য নিচের ফি প্রযোজ্য। (প্রয়োজনীয় সামগ্রীগুলো নির্বাচন করুন):</p>
+          
+          <label class="formality-item" style="opacity: 0.8; cursor: not-allowed;">
+            <input type="checkbox" class="pay-formality-cb" value="Ranked Sash" checked disabled>
+            <span>১. র‍্যাঙ্কড স্যাশ (Ranked Sash) - <strong>৳২০০</strong> (Mandatory)</span>
+          </label>
+          <label class="formality-item" style="opacity: 0.8; cursor: not-allowed;">
+            <input type="checkbox" class="pay-formality-cb" value="Appointment Letter" checked disabled>
+            <span>২. অ্যাপয়েন্টমেন্ট লেটার (Appointment Letter) - <strong>৳৫০</strong> (Mandatory)</span>
+          </label>
+          <label class="formality-item">
+            <input type="checkbox" class="pay-formality-cb opt-cb" value="Official Badge" data-price="100">
+            <span>৩. আইডি কার্ড ও রিবন (Official Badge) - <strong>৳১০০</strong> (Optional)</span>
+          </label>
+          <label class="formality-item">
+            <input type="checkbox" class="pay-formality-cb opt-cb" value="Coat Pin" data-price="100">
+            <span>৪. কোট Pin (Optional Coat Pin) - <strong>৳১০০</strong> (Optional)</span>
+          </label>
+
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--glass-border); font-size: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Mandatory Base Fees:</span> <span>৳250</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-tertiary);"><span>Optional Extras:</span> <span>+ ৳<span id="pay-opt-total">0</span></span></div>
+            <div style="display: flex; justify-content: space-between; font-weight: 800; color: var(--primary); font-size: 20px; margin-top: 12px;"><span>Total Payable Amount:</span> <span>৳<span id="pay-grand-total">250</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-grid" style="text-align: left;">
+      <div class="fg full"><label>Your Candidate Student ID *</label><input type="text" id="pay-sid" placeholder="e.g. 241-15-519"/></div>
+      <div class="fg"><label>Payer Full Name *</label><input type="text" id="pay-name" placeholder="Name of Sender"/></div>
+      <div class="fg"><label>Amount Sent (৳) *</label><input type="number" id="pay-amount" placeholder="e.g. 350"/></div>
+      <div class="fg"><label>Sender Number *</label><input type="text" id="pay-number" placeholder="01XXXXXXXXX"/></div>
+      <div class="fg"><label>Transaction ID (TrxID) *</label><input type="text" id="pay-trx" placeholder="Enter TXN ID..."/></div>
+    </div>
+    
+    <div style="margin-top: 32px;">
+      <button class="btn btn-p" style="width: 100%; padding: 16px; font-size: 18px;" id="btn-submit-payment" onclick="submitPayment()">Submit Payment Details</button>
+    </div>
   </div>
 </div>
 
@@ -802,7 +892,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
         <div class="card-sub">Review, approve, and manage registered candidates.</div>
         <div class="twrap" style="margin-top:24px;">
           <table>
-            <thead><tr><th>#</th><th>Name</th><th>Position</th><th>Dept</th><th>Payment Info</th><th>Status</th><th>Action</th></tr></thead>
+            <thead><tr><th>#</th><th>Name</th><th>Position</th><th>Dept</th><th>Portfolio</th><th>Payment Info</th><th>Status</th><th>Action</th></tr></thead>
             <tbody id="cand-tbody"></tbody>
           </table>
         </div>
@@ -873,6 +963,18 @@ let currentVoter    = null;
 
 const ADMIN_PASS    = 'admin123';
 
+// ── FORMALITY PRICE CALCULATION ─────────────────────
+document.querySelectorAll('.opt-cb').forEach(cb => {
+  cb.addEventListener('change', () => {
+    let optTotal = 0;
+    document.querySelectorAll('.opt-cb:checked').forEach(checkedCb => {
+      optTotal += parseInt(checkedCb.dataset.price);
+    });
+    document.getElementById('pay-opt-total').textContent = optTotal;
+    document.getElementById('pay-grand-total').textContent = 250 + optTotal;
+  });
+});
+
 // ── UI HELPERS FOR LOADING STATES ─────────────────────
 function setBtnLoading(btnId, isLoading, originalText = '') {
   const btn = document.getElementById(btnId);
@@ -925,7 +1027,7 @@ async function fetchData() {
         id: c.id, name: c.full_name, sid: c.student_id, 
         position: c.target_position, dept: c.department, batch: c.batch, bio: c.bio, imageUrl: c.image_url,
         isApproved: c.is_approved !== false,
-        paymentNumber: c.payment_number, trxId: c.transaction_id
+        paymentNumber: c.payment_number, trxId: c.transaction_id, portfolioLink: c.portfolio_link
       }));
     }
 
@@ -1046,7 +1148,8 @@ function renderCandidatesPage() {
             <div class="cp-name">${esc(c.name)}</div>
             <div class="badge bg" style="margin-bottom: 12px; font-size: 13px;">${esc(c.position)}</div>
             <div class="cp-meta">${esc(c.batch)} &middot; ${esc(c.dept)}</div>
-            <div class="cp-bio">"${esc(c.bio || 'No manifesto provided.')}"</div>
+            ${c.portfolioLink ? `<div style="margin-bottom: 16px;"><a href="${esc(c.portfolioLink)}" target="_blank" style="color: var(--primary); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--primary); padding-bottom: 2px;">🔗 View Portfolio</a></div>` : ''}
+            <div class="cp-bio">"${esc(c.bio ? c.bio.split('\n\n--')[0] : 'No manifesto provided.')}"</div>
           </div>
         `).join('')}
       </div>
@@ -1094,18 +1197,18 @@ async function submitPublicCandidate() {
   const dept     = document.getElementById('pub-nc-dept').value.trim();
   const batch    = document.getElementById('pub-nc-batch').value.trim();
   const imageUrl = document.getElementById('pub-nc-image').value.trim();
-  const pay      = document.getElementById('pub-nc-pay').value.trim();
-  const trx      = document.getElementById('pub-nc-trx').value.trim();
+  const portfolio= document.getElementById('pub-nc-portfolio').value.trim();
   const bio      = document.getElementById('pub-nc-bio').value.trim();
   const termsBox = document.getElementById('pub-nc-terms');
   
-  if(!name || !pos || !pay || !trx) { toast('Name, Position, and Payment details are required.', true); return; }
+  if(!name || !pos) { toast('Name and Target Position are required.', true); return; }
   if(!termsBox.checked) { toast('You must agree to the terms.', true); return; }
-  
+
   setBtnLoading('btn-pub-add-cand', true);
   
   const { error } = await supabaseClient.from('candidates').insert([{
-    full_name: name, student_id: sid, target_position: pos, department: dept, batch: batch, image_url: imageUrl, bio: bio, payment_number: pay, transaction_id: trx, is_approved: false
+    full_name: name, student_id: sid, target_position: pos, department: dept, batch: batch, image_url: imageUrl, 
+    bio: bio, portfolio_link: portfolio, is_approved: false
   }]);
 
   if(error) { 
@@ -1114,13 +1217,57 @@ async function submitPublicCandidate() {
     return; 
   }
 
-  ['pub-nc-name','pub-nc-sid','pub-nc-dept','pub-nc-batch','pub-nc-image','pub-nc-pay','pub-nc-trx','pub-nc-bio'].forEach(f => document.getElementById(f).value = '');
+  // Reset fields
+  ['pub-nc-name','pub-nc-sid','pub-nc-dept','pub-nc-batch','pub-nc-image','pub-nc-portfolio','pub-nc-bio'].forEach(f => document.getElementById(f).value = '');
   document.getElementById('pub-nc-pos').value = '';
   termsBox.checked = false;
   
   await fetchData();
   toast('Application submitted! Awaiting Admin Approval.');
   setBtnLoading('btn-pub-add-cand', false, 'Submit Application');
+}
+
+// ── PAYMENT FLOW ───────────────────────────────────────
+async function submitPayment() {
+  const sid = document.getElementById('pay-sid').value.trim();
+  const name = document.getElementById('pay-name').value.trim();
+  const amount = document.getElementById('pay-amount').value.trim();
+  const number = document.getElementById('pay-number').value.trim();
+  const trx = document.getElementById('pay-trx').value.trim();
+
+  if(!sid || !name || !amount || !number || !trx) {
+    toast('All fields are required.', true);
+    return;
+  }
+
+  setBtnLoading('btn-submit-payment', true);
+
+  // Capture requested formalities
+  const selectedFormalities = [];
+  selectedFormalities.push("Ranked Sash");
+  selectedFormalities.push("Appointment Letter");
+  document.querySelectorAll('.opt-cb:checked').forEach(cb => selectedFormalities.push(cb.value));
+
+  const formattedTrx = `TrxID: ${trx} | ৳${amount} | Payer: ${name} | Items: ${selectedFormalities.join(', ')}`;
+
+  const { data, error } = await supabaseClient.from('candidates').update({
+    payment_number: number,
+    transaction_id: formattedTrx
+  }).eq('student_id', sid).select();
+
+  if (error) {
+    toast(error.message, true);
+  } else if (!data || data.length === 0) {
+    toast('Candidate ID not found. Please make sure your Student ID is correct.', true);
+  } else {
+    toast('Payment details submitted securely!');
+    ['pay-sid', 'pay-name', 'pay-amount', 'pay-number', 'pay-trx'].forEach(id => document.getElementById(id).value = '');
+    document.querySelectorAll('.opt-cb').forEach(cb => cb.checked = false);
+    document.getElementById('pay-opt-total').textContent = '0';
+    document.getElementById('pay-grand-total').textContent = '250';
+  }
+  
+  setBtnLoading('btn-submit-payment', false, 'Submit Payment Details');
 }
 
 
@@ -1214,7 +1361,7 @@ function buildBallot() {
             </div>
             <div class="cname">${esc(c.name)}</div>
             <div class="cmeta">${esc(c.batch)} &middot; ${esc(c.dept)}</div>
-            ${c.bio ? `<div class="cbio">"${esc(c.bio)}"</div>` : ''}
+            ${c.bio ? `<div class="cbio">"${esc(c.bio.split('\n\n--')[0])}"</div>` : ''}
           </div>`).join('')}
       </div>`;
     body.appendChild(div);
@@ -1495,7 +1642,10 @@ function renderCandTable() {
       <td><span class="badge bg">${esc(c.position)}</span></td>
       <td>${esc(c.dept||'—')}</td>
       <td>
-        ${c.trxId ? `<div style="font-size:12px; color:var(--text-sec); font-family:var(--font-mono);">Num: ${esc(c.paymentNumber)}<br>Trx: <strong style="color:var(--text-main);">${esc(c.trxId)}</strong></div>` : '—'}
+        ${c.portfolioLink ? `<a href="${esc(c.portfolioLink)}" target="_blank" style="color:var(--primary); text-decoration:underline; font-size:13px;">View Link</a>` : '<span style="color:var(--text-sec); font-size:12px;">No link</span>'}
+      </td>
+      <td>
+        ${c.trxId ? `<div style="font-size:12px; color:var(--text-sec); font-family:var(--font-mono); line-height: 1.4;">Num: ${esc(c.paymentNumber)}<br><strong style="color:var(--text-main);">${esc(c.trxId)}</strong></div>` : '<span style="color:var(--warning); font-size:12px;">Unpaid</span>'}
       </td>
       <td>${c.isApproved ? '<span class="badge bg">Approved</span>' : '<span class="badge bo">Awaiting</span>'}</td>
       <td style="white-space:nowrap; display:flex; gap:8px;">
@@ -1526,7 +1676,7 @@ function aggregateResults() {
 
 // ── ADMIN: RESULTS ───────────────────────────────────
 function renderResults() {
-  const total = voters.filter(v => v.isApproved).length; // Tally based on active voters
+  const total = voters.filter(v => v.isApproved).length; 
   const voted = voters.filter(v => v.voted || votes[v.id]).length;
   
   document.getElementById('r-total').textContent = total;
