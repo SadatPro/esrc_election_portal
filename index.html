@@ -326,7 +326,7 @@ select option { background: #06402b; color: #fff; }
 .live-cand-row.leading .lcr-bar { background: var(--primary); box-shadow: 0 0 10px var(--primary);}
 .lcr-pct { font-size: 28px; font-weight: 800; color: var(--text-main); white-space: nowrap; text-align: right; font-family: var(--font-heading); }
 .live-cand-row.leading .lcr-pct { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow);}
-.lcr-votes { font-size: 14px; color: var(--text-sec); text-align: right; font-weight: 600; margin-top: 4px; }
+.lcr-votes { font-size: 14px; color: var(--text-sec); text-align: right; font-weight: 600; margin-top: 4px; display: none; /* Hidden requested by user */ } 
 .runner-assign { background: var(--warning-glass); border: 1px solid var(--warning); border-radius: var(--radius-sm); padding: 16px 20px; margin-top: 24px; font-size: 14px; color: #FFD600; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow-sm);}
 
 /* ── SEGMENTED CONTROL (GLASS) ── */
@@ -460,6 +460,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
   <div class="hdr">
     <div class="logo" onclick="showPage('home')">
       <div class="logo-ico">
+        <!-- Logo added logic -->
         <img src="https://raw.githubusercontent.com/SadatPro/img/refs/heads/main/esrc_logo.png" alt="ESRC">
       </div>
       <div class="logo-l1">ESRC Portal</div>
@@ -1072,11 +1073,17 @@ function updateStatusUI() {
 
 // ── PAGE NAVIGATION ──────────────────────────────────
 function showPage(p) {
-  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
-  if (p !== 'home' && document.getElementById('page-' + p)) {
-    document.getElementById('page-' + p).classList.add('active');
+  // 1. Remove active state from all pages and clean up any inline display styles
+  document.querySelectorAll('.page').forEach(x => {
+    x.classList.remove('active');
+    x.style.display = ''; 
+  });
+  
+  // 2. Add active state to the requested page
+  const targetPage = document.getElementById('page-' + p);
+  if (targetPage) {
+    targetPage.classList.add('active');
   }
-  document.getElementById('page-home').style.display = (p === 'home') ? '' : 'none';
   
   if(p === 'voter') resetGate();
   
@@ -1759,7 +1766,7 @@ function renderLive() {
             </div>
             <div>
               <div class="lcr-pct">${pct}%</div>
-              <div class="lcr-votes">${c.vc} votes</div>
+              <!-- Removed absolute vote count from live results -->
             </div>
           </div>`;
       }).join('')}
