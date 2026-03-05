@@ -638,19 +638,18 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
               <option value="President">President</option>
               <option value="Vice President - 2">Vice President - 2</option>
               <option value="General Secretary">General Secretary</option>
-              <option value="Chif of Stuff">Chif of Stuff</option>
               <option value="Assistant General Secretary - 2">Assistant General Secretary - 2</option>
-              <option value="Treasurer">Treasurer</option>
-              
+              <option value="Chief of Staff">Chief of Staff</option>
             </optgroup>
             <optgroup label="Phase 2 · Executive Council">
+              <option value="Treasurer">Treasurer</option>
               <option value="Women's Secretary">Women's Secretary</option>
               <option value="Media Secretary">Media Secretary</option>
               <option value="Office Secretary">Office Secretary</option>
               <option value="Organizing Secretary">Organizing Secretary</option>
               <option value="Press Secretary">Press Secretary</option>
-              <option value="Graphic Designer">Graphic Designer</option>
-              <option value="video Editor">Video Editor</option>
+              <option value="Graphics Designer">Graphics Designer</option>
+              <option value="Video Editor">Video Editor</option>
             </optgroup>
           </select>
         </div>
@@ -871,7 +870,7 @@ footer strong { color: var(--text-main); font-weight: 700; font-family: var(--fo
         <div class="card-sub">Review, approve, and manage registered candidates.</div>
         <div class="twrap" style="margin-top:24px;">
           <table>
-            <thead><tr><th>#</th><th>Name</th><th>Position</th><th>Dept</th><th>Portfolio</th><th>Payment Info</th><th>Status</th><th>Action</th></tr></thead>
+            <thead><tr><th>#</th><th>Image</th><th>Name</th><th>Position</th><th>Dept</th><th>Portfolio</th><th>Phone No.</th><th>TrxID Details</th><th>Status</th><th>Action</th></tr></thead>
             <tbody id="cand-tbody"></tbody>
           </table>
         </div>
@@ -922,12 +921,15 @@ const POSITIONS = [
   { id:'vp2', name:'Vice President - 2', phase:1, batchNote:'Batch 64–65', runnerUpRole:null },
   { id:'gs', name:'General Secretary', phase:1, batchNote:'Batch 63–64', runnerUpRole:'Assistant General Secretary - 1' },
   { id:'ags2', name:'Assistant General Secretary - 2', phase:1, batchNote:'Batch 66+', runnerUpRole:null },
+  { id:'chiefofstaff', name:'Chief of Staff', phase:1, batchNote:'Batch 63–65', runnerUpRole:'Assistant Chief of Staff' },
   { id:'treasurer', name:'Treasurer', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Treasurer' },
   { id:'womens', name:"Women's Secretary", phase:2, batchNote:'Batch 63–67', runnerUpRole:"Joint Women's Secretary" },
   { id:'media', name:'Media Secretary', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Media Secretary' },
   { id:'office', name:'Office Secretary', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Office Secretary' },
   { id:'organizing', name:'Organizing Secretary', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Organizing Secretary' },
   { id:'press', name:'Press Secretary', phase:2, batchNote:'Batch 63–67', runnerUpRole:'Assistant Press Secretary' },
+  { id:'graphics', name:'Graphics Designer', phase:2, batchNote:'Batch 63–67', runnerUpRole:null },
+  { id:'video', name:'Video Editor', phase:2, batchNote:'Batch 63–67', runnerUpRole:null },
 ];
 
 let voters          = [];
@@ -942,7 +944,7 @@ let currentVoter    = null;
 
 let lastDataHash    = "";
 
-const ADMIN_PASS    = 'admin@1111';
+const ADMIN_PASS    = 'admin123';
 
 // ── UI HELPERS FOR LOADING STATES ─────────────────────
 function setBtnLoading(btnId, isLoading, originalText = '') {
@@ -1608,22 +1610,30 @@ async function removeCandidate(id) {
 
 function renderCandTable() {
   const tb = document.getElementById('cand-tbody');
-  if(!candidates.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty">No candidates found.</div></td></tr>`; return; }
+  if(!candidates.length) { tb.innerHTML = `<tr><td colspan="10"><div class="empty">No candidates found.</div></td></tr>`; return; }
   
   tb.innerHTML = candidates.map((c,i) => `
     <tr>
       <td style="color:var(--text-tertiary)">${i+1}</td>
-      <td><strong>${esc(c.name)}</strong></td>
+      <td>
+        <div style="width: 40px; height: 40px; border-radius: 8px; background-color: var(--glass-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--glass-border); ${c.imageUrl ? `background-image: url('${esc(c.imageUrl)}'); background-size: cover; background-position: center;` : ''}">
+          ${c.imageUrl ? '' : '🖼️'}
+        </div>
+      </td>
+      <td><strong>${esc(c.name)}</strong><br><span style="font-size:12px; color:var(--text-sec); font-family:var(--font-mono);">${esc(c.sid||'')}</span></td>
       <td><span class="badge bg">${esc(c.position)}</span></td>
       <td>${esc(c.dept||'—')}</td>
       <td>
         ${c.portfolioLink ? `<a href="${esc(c.portfolioLink)}" target="_blank" style="color:var(--primary); text-decoration:underline; font-size:13px;">View Link</a>` : '<span style="color:var(--text-sec); font-size:12px;">No link</span>'}
       </td>
-      <td>
-        ${c.trxId ? `<div style="font-size:12px; color:var(--text-sec); font-family:var(--font-mono); line-height: 1.4;">Num: ${esc(c.paymentNumber)}<br><strong style="color:var(--text-main);">${esc(c.trxId)}</strong></div>` : '<span style="color:var(--warning); font-size:12px;">Unpaid</span>'}
+      <td style="font-family:var(--font-mono); font-size:13px; color:var(--text-main);">${esc(c.paymentNumber || '—')}</td>
+      <td title="${esc(c.trxId || '')}">
+        <div style="font-size:12px; color:var(--text-sec); font-family:var(--font-mono); line-height: 1.4; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${c.trxId ? esc(c.trxId) : '<span style="color:var(--warning);">Unpaid</span>'}
+        </div>
       </td>
       <td>${c.isApproved ? '<span class="badge bg">Approved</span>' : '<span class="badge bo">Awaiting</span>'}</td>
-      <td style="white-space:nowrap; display:flex; gap:8px;">
+      <td style="white-space:nowrap; display:flex; gap:8px; align-items: center; height: 100%; padding-top: 18px;">
         ${!c.isApproved ? `<button class="btn-approve" onclick="approveCandidate('${c.id}')">Approve</button>` : ''}
         <button class="btn-edit" onclick="editCandidate('${c.id}')">Edit</button>
         <button class="btn-d" onclick="removeCandidate('${c.id}')">Del</button>
